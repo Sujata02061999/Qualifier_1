@@ -1,13 +1,90 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width= , initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Loan Details</Details></title>
 </head>
 <body>
+  <div id="name">
+    <h2><span class="eId">India</span><span class="market">Market</span></h2>
+  </div>
+
+  <h1 id="heading">Loan Details</h1>
+   <form id="loanForm">
+    <label for="employeeID">Employee ID:</label>
+    <input type="text" id="employeeID" required pattern="E.{3,}" title="minimum four charchter with begmming of 'E' char>
+    <p id="idValidation" style="color: red;"></p>
     
-</body>
+    <label for="employeeName">Employee Name:</label>
+    <input type="text" id="employeeName" required>
+
+    <label for="employeeAddress">Address:</label>
+    <input type="text" id="employeeAddress" required>
+
+    <label for="employeeDesignation">Designation:</label>
+    <select id="employeeDesignation" required>
+       <option value="manager">Manager</option>
+       <option value="developer">Developer</option>
+       <option value="analyst">Analyst</option>
+    </select>
+
+    <label for="employeeLoan">Loan Amount:</label>
+    <input type="number" id="loanAmount" required>
+
+    <label for="employeeRate">Interest Rate %:</label>
+    <input type="number" id="interestRate" required>
+
+    <label for="employeeMaturityDate">Maturity Date:</label>
+    <input type="date" id="maturityDate" required>
+
+   <button type="button" onclick="validateAndCalculateLoan()">Calculate Loan</button>
+
+   </form>
+     
+   <div id="result"></div>
+   <script>
+    function validateAndCalculateLoan(){
+      const empIdInput = document.getElementById('employeeID');
+      const isValidMsg = document.getElementById('idValidation');
+
+      if(!empIdInput.checkValidity()){
+        isValidMsg.textContent= "Invalid Employee Id, minimum four charchter with begmming of 'E' char";
+        return;
+      }
+      isValidMsg.textContent= '';
+      calculateLoan();
+    }
+
+    function calculateLoan(){
+      const designation= document.getElementById('employeeDesignation').value;
+      const loanAmount= parseFloat(document.getElementById('loanAmount').value);
+      const interestRate= parseFloat(document.getElementById('interestRate').value);
+
+      let interesMul = 0;
+      switch(designation){
+        case 'manager':
+          interesMul = 0.1;
+          break;
+          case 'developer':
+          interesMul = 0.08;
+          break; 
+          case 'analyst':
+          interesMul = 0.05;
+          break;
+      }
+     
+      const interest = loanAmount * interesMul;
+      const totalAmount = loanAmount+ interest;
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<p><b>Loan Amount :</b>$${loanAmount.toFixed(2)}</p>
+      <p><b>Interest: :</b>$${interest.toFixed(2)}</p>
+      <p><b>Amount payble :</b>$${totalAmount.toFixed(2)}</p>`
+
+    }
+   </script>
+  </body>
 </html>
